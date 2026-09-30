@@ -150,13 +150,3 @@ cout
 ```
 
 以及一般運算式與變數操作。
-
-## Skills
-
-- C++
-- Data Structure
-- Tokenizer
-- Recursive Descent Parsing
-- Abstract Syntax Tree
-- Debugging
-- Scope Management
