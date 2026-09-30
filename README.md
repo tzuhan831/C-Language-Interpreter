@@ -1,25 +1,33 @@
 # C Language Interpreter
 
-A C-like interpreter implemented in C++ for practicing lexical analysis, recursive-descent parsing, abstract syntax tree construction, expression evaluation, and basic control flow.
-
-> This project implements a **subset of C-like syntax** for educational purposes. It is not a full C compiler or a standards-compliant C interpreter.
+使用 C++ 實作的簡易 C-like Interpreter，主要練習 Tokenizer、Recursive Descent Parser、AST 建立、變數管理與基本控制流程。
 
 ## Features
 
-- Lexical analysis / tokenization
-- Recursive-descent parsing
-- Abstract Syntax Tree (AST) construction
-- Variable declaration and scope management
-- Supported data types: `int`, `float`, `char`, `string`, `bool`
-- Arithmetic operators: `+`, `-`, `*`, `/`, `%`
-- Comparison operators: `==`, `!=`, `>`, `<`, `>=`, `<=`
-- Logical operators: `&&`, `||`, `!`
-- Assignment operators: `=`, `+=`, `-=`, `*=`, `/=`, `%=`
-- Increment / decrement: `++`, `--`
-- Conditional statements: `if`, `else`
-- Loop statements: `while`, `do ... while`
-- Basic `cout` output
-- Identifier checking and basic error reporting
+- Lexical Analysis / Tokenizer
+- Recursive Descent Parser
+- Abstract Syntax Tree (AST)
+- 變數宣告與 Scope 管理
+- 基本資料型態
+  - `int`
+  - `float`
+  - `char`
+  - `string`
+  - `bool`
+- 算術運算
+  - `+ - * / %`
+- 比較運算
+  - `== != > < >= <=`
+- 邏輯運算
+  - `&& || !`
+- 指派運算
+  - `= += -= *= /= %=`
+- `++`、`--`
+- `if / else`
+- `while`
+- `do-while`
+- `cout`
+- 基本錯誤處理
 
 ## Project Structure
 
@@ -31,32 +39,17 @@ C-Language-Interpreter/
 └── .gitignore
 ```
 
-## Build
-
-### Linux / macOS
-
-```bash
-g++ -std=c++17 main.cpp -o c_interpreter
-```
-
-### Windows with MinGW g++
-
-```bash
-g++ -std=c++17 main.cpp -o c_interpreter.exe
-```
-
 ## Run
 
-The program currently reads an initial integer before starting the interpreter.  
-The provided `sample_input.txt` includes this required first line.
+程式會先讀取一個測試編號，再開始執行 Interpreter。
 
-### Linux / macOS
+可以使用 `sample_input.txt` 作為測試輸入。
 
 ```bash
 ./c_interpreter < sample_input.txt
 ```
 
-### Windows
+Windows：
 
 ```bash
 c_interpreter.exe < sample_input.txt
@@ -68,6 +61,7 @@ c_interpreter.exe < sample_input.txt
 1
 int a;
 a = 10;
+
 int b;
 b = 3;
 
@@ -85,44 +79,84 @@ while ( b < 5 ) {
 Done();
 ```
 
-## Example Output
-
-```text
-Our-C running ...
-> Definition of a entered ...
-> Statement executed ...
-> Definition of b entered ...
-> Statement executed ...
-> a + b = 13
-Statement executed ...
-> a is greater than b
-Statement executed ...
-> b = 3
-b = 4
-Statement executed ...
-> Our-C exited ...
-```
-
 ## Implementation Overview
 
 ### 1. Tokenizer
 
-The interpreter reads the input stream and converts characters into tokens such as identifiers, constants, operators, delimiters, and keywords.
+將輸入字串解析成不同類型的 Token，例如：
+
+- Identifier
+- Constant
+- Operator
+- Keyword
+- Delimiter
+
+並處理像是：
+
+```text
++  -  *  /  %
+== != >= <=
+&& ||
+++ --
+```
+
+等運算符號。
 
 ### 2. Parser
 
-A recursive-descent parser processes the token stream according to the supported grammar and checks whether statements and expressions are syntactically valid.
+使用 Recursive Descent Parsing 依照語法規則解析輸入程式。
 
-### 3. AST
+不同層級的運算會分別處理，例如：
 
-Parsed expressions and statements are represented with tree nodes, allowing the interpreter to preserve operator structure and execution order.
+- Assignment
+- Logical Expression
+- Comparison
+- Addition / Subtraction
+- Multiplication / Division
 
-### 4. Evaluation
+以維持正確的運算優先順序。
 
-The evaluator traverses the parsed tree, manages identifiers and scopes, evaluates expressions, performs assignments, and executes control-flow statements.
+### 3. Abstract Syntax Tree
 
-## Notes
+解析過程中建立 AST（Abstract Syntax Tree），用來表示程式中的運算式與控制流程。
 
-- `Done();` terminates the interpreter session.
-- This repository is intended as a portfolio / coursework project demonstrating C++ parsing, debugging, data structures, and interpreter implementation.
-- The original source file was converted from CP950/Big5 comments to UTF-8 so Chinese comments display correctly on GitHub.
+每個 Node 會保存：
+
+- Node 名稱
+- Token Type
+- Child Nodes
+
+### 4. Variable & Scope Management
+
+使用資料結構保存變數資訊，並處理不同 Scope 中的變數。
+
+支援：
+
+- 變數宣告
+- 變數查找
+- 變數賦值
+- Array index
+- Scope 管理
+
+### 5. Statement Execution
+
+依照 AST 執行不同類型的 Statement，包括：
+
+```cpp
+if / else
+while
+do-while
+cout
+```
+
+以及一般運算式與變數操作。
+
+## Skills
+
+- C++
+- Data Structure
+- Tokenizer
+- Recursive Descent Parsing
+- Abstract Syntax Tree
+- Debugging
+- Scope Management
